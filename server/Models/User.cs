@@ -1,5 +1,5 @@
 
-namespace dotnet_todo_list.Models
+namespace TodoList.Models
 {
     public class User
     {
