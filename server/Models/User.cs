@@ -1,13 +1,20 @@
 
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
 namespace TodoList.Models
 {
     public class User
     {
-        public long ID { get; set; }
+        public int UserId { get; set; }
 
-        public string Email { get; set; }
-
+        [Required]
         public string Name { get; set; }
 
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; }
+
+        public List<Todo> Todos { get; set; }
     }
 }
