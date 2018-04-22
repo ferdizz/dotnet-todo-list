@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TodoList.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -10,11 +9,14 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using TodoList.Data;
+using TodoList.Models;
 
 namespace TodoList
 {
     public class Startup
     {
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -26,8 +28,11 @@ namespace TodoList
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-            services.AddEntityFrameworkNpgsql().AddDbContext<TodoListContext>(options
+            services.AddTransient<UserManager, UserManager>();
+            services.AddTransient<TodoManager, TodoManager>();
+            services.AddEntityFrameworkNpgsql().AddDbContext<ApplicationDBContext>(options
                 => options.UseNpgsql(Configuration.GetConnectionString("TodoListDB")));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
