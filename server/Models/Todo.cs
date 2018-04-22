@@ -1,19 +1,24 @@
 
 using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json;
 
 namespace TodoList.Models
 {
+    public enum TodoType
+    {
+        WORK, SCHOOL, HOME
+    }
+
     public class Todo
     {
-        public int TodoId { get; set; }
+        public int Id { get; set; }
 
         [Required]
         public string Title { get; set; }
-        public string Type { get; set; }
 
+        public TodoType? Type { get; set; }
         public string Description { get; set; }
-
+        public bool IsDone { get; set; }
         public int UserId { get; set; }
-        public User User { get; set; }
     }
 }

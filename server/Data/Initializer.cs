@@ -8,7 +8,6 @@ namespace TodoList.Data
     {
         public static void Seed(this ApplicationDBContext context)
         {
-
             context.Database.EnsureCreated();
 
             if (!context.Users.Any() && !context.Todos.Any())
@@ -20,17 +19,16 @@ namespace TodoList.Data
                 context.Users.AddRange(new User[] { ola, kari, per });
                 context.Todos.AddRange(new Todo[]
                 {
-                    new Todo { Title="Vaske klær", Description="", Type=TodoType.HOME, User=ola },
-                    new Todo { Title="Gjør oblig 2", Description="NB! Frist 1. mai", Type=TodoType.SCHOOL, User=ola },
-                    new Todo { Title="Sjekk værmelding", Description="Sjekk værmelding og evt bestill tur", User=kari} ,
-                    new Todo { Title="Skriv ny CV", Description="", Type=TodoType.HOME, User=per },
-                    new Todo { Title="Skriv frontend-tester", Description="", Type=TodoType.WORK, User=per },
-                    new Todo { Title="Skriv backend-tester", Description="", Type=TodoType.WORK, User=per },
+                    new Todo { Title="Vaske klær", Description="", Type=TodoType.HOME, UserId=ola.Id },
+                    new Todo { Title="Gjør oblig 2", Description="NB! Frist 1. mai", Type=TodoType.SCHOOL, UserId=ola.Id },
+                    new Todo { Title="Sjekk værmelding", Description="Sjekk værmelding og evt bestill tur", UserId=kari.Id} ,
+                    new Todo { Title="Skriv ny CV", Description="", Type=TodoType.HOME, UserId=per.Id },
+                    new Todo { Title="Skriv frontend-tester", Description="", Type=TodoType.WORK, UserId=per.Id },
+                    new Todo { Title="Skriv backend-tester", Description="", Type=TodoType.WORK, UserId=per.Id },
                 });
 
                 context.SaveChanges();
             }
-
         }
     }
 }
