@@ -58,7 +58,7 @@ namespace TodoList.Controllers
         [HttpPut("{id}")]
         public IActionResult Update(int id, [FromBody]Todo todo)
         {
-            if (todo == null || todo.Id != id)
+            if (todo == null)
             {
                 return BadRequest();
             }
@@ -69,12 +69,37 @@ namespace TodoList.Controllers
                 return NotFound("Todo not found");
             }
 
-            _todo.Title = todo.Title;
-            _todo.Type = todo.Type;
-            _todo.Description = todo.Description;
-            _todo.IsDone = todo.IsDone;
+            if (todo.Title != null)
+            {
+                _todo.Title = todo.Title;
+            }
+
+            if (todo.Type != null)
+            {
+                _todo.Type = todo.Type;
+            }
+
+            if (todo.Description != null)
+            {
+                _todo.Description = todo.Description;
+            }
+
             _todoManager.Update(_todo);
             return Ok("Todo updated");
+        }
+
+        // GET api/todos/5/toggle
+        [HttpGet("{id}/toggle")]
+        public IActionResult Toggle(int id)
+        {
+            var todo = _todoManager.GetById(id);
+            if (todo == null)
+            {
+                return NotFound("Todo not found");
+            }
+
+            _todoManager.Toggle(todo);
+            return Ok("Todo toggled");
         }
 
         // DELETE api/todos/5

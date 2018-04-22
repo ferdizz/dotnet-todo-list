@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
@@ -40,6 +41,13 @@ namespace TodoList.Data
 
         public void Update(Todo t)
         {
+            db.Update(t);
+            db.SaveChanges();
+        }
+
+        public void Toggle(Todo t)
+        {
+            t.IsDone = !t.IsDone;
             db.Update(t);
             db.SaveChanges();
         }
