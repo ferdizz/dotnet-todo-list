@@ -23,9 +23,18 @@ namespace TodoList.Controllers
 
         // GET api/todos
         [HttpGet]
-        public IEnumerable<Todo> GetAll()
+        public IActionResult GetAll()
         {
-            return _todoManager.GetAll();
+            return Ok(from todo in _todoManager.GetAll()
+                      select new
+                      {
+                          Id = todo.Id,
+                          Title = todo.Title,
+                          Description = todo.Description,
+                          Type = getType(todo.Type),
+                          IsDone = todo.IsDone,
+                          UserId = todo.UserId
+                      });
         }
 
         // GET api/todos/5
@@ -38,7 +47,15 @@ namespace TodoList.Controllers
                 return NotFound("Todo not found");
             }
 
-            return Ok(todo);
+            return Ok(new
+            {
+                Id = todo.Id,
+                Title = todo.Title,
+                Description = todo.Description,
+                Type = getType(todo.Type),
+                IsDone = todo.IsDone,
+                UserId = todo.UserId
+            });
         }
 
         // POST api/todos
@@ -114,6 +131,11 @@ namespace TodoList.Controllers
 
             _todoManager.Delete(todo);
             return Ok("Todo deleted");
+        }
+
+        public string getType(TodoType? t)
+        {
+            return t == null ? "Uncategorized" : ((TodoType)t).ToString();
         }
     }
 }

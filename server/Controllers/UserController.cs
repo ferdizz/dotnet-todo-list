@@ -23,9 +23,15 @@ namespace TodoList.Controllers
 
         // GET api/users
         [HttpGet]
-        public IEnumerable<User> GetAll()
+        public IActionResult GetAll()
         {
-            return _userManager.GetAll();
+            return Ok(from user in _userManager.GetAll()
+                      select new
+                      {
+                          Id = user.Id,
+                          Email = user.Email,
+                          Name = user.Name
+                      });
         }
 
         // GET api/users/5
@@ -38,7 +44,23 @@ namespace TodoList.Controllers
                 return NotFound("User not found");
             }
 
-            return Ok(user);
+            var todos = from todo in user.Todos
+                        select new
+                        {
+                            Id = todo.Id,
+                            Title = todo.Title,
+                            Description = todo.Description,
+                            Type = ((TodoType)todo.Type).ToString(),
+                            IsDone = todo.IsDone
+                        };
+
+            return Ok(new
+            {
+                Id = user.Id,
+                Email = user.Email,
+                Name = user.Name,
+                Todos = todos
+            });
         }
 
         // POST api/users
@@ -56,14 +78,19 @@ namespace TodoList.Controllers
             }
 
             _userManager.Add(user);
-            return CreatedAtRoute("GetUser", new { id = user.Id }, user);
+            return CreatedAtRoute("GetUser", new { id = user.Id }, new
+            {
+                Id = user.Id,
+                Email = user.Email,
+                Name = user.Name
+            });
         }
 
         // PUT api/users/5
         [HttpPut("{id}")]
         public IActionResult Update(int id, [FromBody]User user)
         {
-            if (user == null || user.Id != id)
+            if (user == null)
             {
                 return BadRequest();
             }
@@ -79,8 +106,16 @@ namespace TodoList.Controllers
                 return NotFound("User not found");
             }
 
-            _user.Email = user.Email;
-            _user.Name = user.Name;
+            if (user.Email != null)
+            {
+                _user.Email = user.Email;
+            }
+
+            if (user.Name != null)
+            {
+                _user.Name = user.Name;
+            }
+
             _userManager.Update(_user);
             return Ok("User updated");
         }
