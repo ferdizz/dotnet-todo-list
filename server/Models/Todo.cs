@@ -6,7 +6,7 @@ namespace TodoList.Models
 {
     public enum TodoType
     {
-        WORK, SCHOOL, HOME
+        Work, School, Home
     }
 
     public class Todo

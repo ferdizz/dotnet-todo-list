@@ -19,12 +19,12 @@ namespace TodoList.Data
                 context.Users.AddRange(new User[] { ola, kari, per });
                 context.Todos.AddRange(new Todo[]
                 {
-                    new Todo { Title="Vaske klær", Description="", Type=TodoType.HOME, UserId=ola.Id },
-                    new Todo { Title="Gjør oblig 2", Description="NB! Frist 1. mai", Type=TodoType.SCHOOL, UserId=ola.Id },
+                    new Todo { Title="Vaske klær", Description="", Type=TodoType.Home, UserId=ola.Id },
+                    new Todo { Title="Gjør oblig 2", Description="NB! Frist 1. mai", Type=TodoType.School, UserId=ola.Id },
                     new Todo { Title="Sjekk værmelding", Description="Sjekk værmelding og evt bestill tur", UserId=kari.Id} ,
-                    new Todo { Title="Skriv ny CV", Description="", Type=TodoType.HOME, UserId=per.Id },
-                    new Todo { Title="Skriv frontend-tester", Description="", Type=TodoType.WORK, UserId=per.Id },
-                    new Todo { Title="Skriv backend-tester", Description="", Type=TodoType.WORK, UserId=per.Id },
+                    new Todo { Title="Skriv ny CV", Description="", Type=TodoType.Home, UserId=per.Id },
+                    new Todo { Title="Skriv frontend-tester", Description="", Type=TodoType.Work, UserId=per.Id },
+                    new Todo { Title="Skriv backend-tester", Description="", Type=TodoType.Work, UserId=per.Id },
                 });
 
                 context.SaveChanges();
