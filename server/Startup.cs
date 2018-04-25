@@ -28,10 +28,12 @@ namespace TodoList
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            services.AddCors();
             services.AddTransient<UserManager, UserManager>();
             services.AddTransient<TodoManager, TodoManager>();
-            services.AddEntityFrameworkNpgsql().AddDbContext<ApplicationDBContext>(options
-                => options.UseNpgsql(Configuration.GetConnectionString("TodoListDB")));
+            services.AddEntityFrameworkNpgsql().AddDbContext<ApplicationDBContext>(
+                options => options.UseNpgsql(Configuration.GetConnectionString("TodoListDB"))
+            );
 
         }
 
@@ -42,6 +44,10 @@ namespace TodoList
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors(
+                options => options.WithOrigins("http://localhost:3000").AllowAnyMethod()
+            );
 
             app.UseMvc();
         }
