@@ -17,7 +17,8 @@ namespace TodoList.Data
 
         public IEnumerable<User> GetAll()
         {
-            return db.Users;
+            return db.Users
+                .Include(u => u.Todos);
         }
 
         public User GetById(int id)

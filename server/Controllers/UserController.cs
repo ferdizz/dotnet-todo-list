@@ -33,7 +33,8 @@ namespace TodoList.Controllers
                       {
                           Id = user.Id,
                           Email = user.Email,
-                          Name = user.Name
+                          Name = user.Name,
+                          Todos = GetTodoDTOs(user)
                       });
         }
 

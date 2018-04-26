@@ -28,6 +28,10 @@ namespace TodoList.Models
 
         public static IEnumerable<TodoDTO> GetTodoDTOs(User user)
         {
+            if (user.Todos == null)
+            {
+                return null;
+            }
             var todos = from todo in user.Todos
                         select GetTodoDTO(todo);
 
