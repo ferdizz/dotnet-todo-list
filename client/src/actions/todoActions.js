@@ -39,3 +39,20 @@ export const toggleTodo = (dispatch, id) => {
             console.log(error);
         })
 }
+
+export const deleteTodo = (dispatch, id) => {
+    axios.delete(API + '/todos/' + id)
+        .then(response => {
+            if (response.status === 200) {
+                dispatch({
+                    type: types.DELETE_TODO,
+                    id: id
+                });
+            } else {
+                console.log(response);
+            }
+        })
+        .catch(error => {
+            console.log(error);
+        })
+}

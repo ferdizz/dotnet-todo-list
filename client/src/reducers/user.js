@@ -28,6 +28,10 @@ const user = (state = initialState, action) => {
                     return todo;
                 })
             };
+        case types.DELETE_TODO:
+            return Object.assign({}, state, {
+                todos: state.todos.filter(todo => todo.id !== action.id)
+            });
         default:
             return state;
     }

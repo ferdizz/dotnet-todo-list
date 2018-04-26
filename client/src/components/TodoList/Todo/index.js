@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { toggleTodo } from '../../../actions/todoActions';
+import { toggleTodo, deleteTodo } from '../../../actions/todoActions';
 
 class Todo extends Component {
 
     handleCheck = (e) => {
         this.props.toggleTodo(this.props.id);
+    }
+
+    onDeleteTodo = () => {
+        this.props.deleteTodo(this.props.id);
     }
 
     render() {
@@ -17,9 +21,9 @@ class Todo extends Component {
                         <input type="checkbox" className="custom-control-input" id={this.props.id} onChange={this.handleCheck} defaultChecked={this.props.isDone} />
                         <label className="custom-control-label" style={{ textDecoration: this.props.isDone ? 'line-through' : '' }} htmlFor={this.props.id} >{this.props.title}</label>
 
-                        <a href="#" className="card-link todo-link" onClick={this.onDeleteUser}>Delete</a>
-                        <a href="#" className="card-link todo-link" onClick={this.onUpdateUser}>Edit</a>
-                        <a href="#" className="card-link todo-link" onClick={this.onExpandUser}>Expand</a>
+                        <a href="#" className="card-link todo-link" onClick={this.onDeleteTodo}>Delete</a>
+                        <a href="#" className="card-link todo-link" onClick={this.onUpdateTodo}>Edit</a>
+                        <a href="#" className="card-link todo-link" onClick={this.onExpandTodo}>Expand</a>
                     </div>
                 </div>
             </div>
@@ -30,7 +34,8 @@ class Todo extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        toggleTodo: (id) => toggleTodo(dispatch, id)
+        toggleTodo: (id) => toggleTodo(dispatch, id),
+        deleteTodo: (id) => deleteTodo(dispatch, id),
     }
 }
 
