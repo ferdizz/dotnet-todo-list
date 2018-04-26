@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -45,8 +46,11 @@ namespace TodoList
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseCors(
-                options => options.WithOrigins("http://localhost:3000").AllowAnyMethod()
+            app.UseCors(builder => builder
+                .WithOrigins("http://localhost:3000")
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials()
             );
 
             app.UseMvc();
