@@ -17,7 +17,7 @@ class UserList extends Component {
                 <div className="card-body">
                     <h5 className="card-title">Users</h5>
                     {this.props.users && this.props.users.map(user => (
-                        <User key={user.id} id={user.id} email={user.email} name={user.name} />
+                        <User key={user.id} id={user.id} email={user.email} name={user.name} todos={user.todos} />
                     ))}
                 </div>
             </div>
