@@ -5,14 +5,14 @@ const API = process.env.REACT_APP_API;
 export const getUsers = (dispatch) => {
 
     axios.get(API + '/users')
-        .then(result => {
+        .then(response => {
             dispatch({
                 type: types.GET_USERS,
-                users: result.data
+                users: response.data
             });
         })
-        .catch(e => {
-            console.log(e);
+        .catch(error => {
+            console.log(error);
         });
 
 }
@@ -20,9 +20,9 @@ export const getUsers = (dispatch) => {
 export const deleteUser = (dispatch, id) => {
 
     axios.delete(API + '/users/' + id)
-        .then(result => {
+        .then(response => {
 
-            if (result.status === 200) {
+            if (response.status === 200) {
                 dispatch({
                     type: types.DELETE_USER,
                     id: id
@@ -32,8 +32,8 @@ export const deleteUser = (dispatch, id) => {
             }
 
         })
-        .catch(e => {
-            console.log(e);
+        .catch(error => {
+            console.log(error);
         });
 
 }
