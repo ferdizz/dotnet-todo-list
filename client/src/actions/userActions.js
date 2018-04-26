@@ -1,6 +1,5 @@
 import axios from 'axios';
 import * as types from './actionTypes';
-import { saveData } from '../misc/storage';
 const API = process.env.REACT_APP_API;
 
 export const login = (dispatch, userdata) => {
@@ -8,7 +7,6 @@ export const login = (dispatch, userdata) => {
     axios.post(API + '/users/login', userdata)
         .then(response => {
             if (response.data.id) {
-                saveData('user', response.data)
                 setUser(dispatch, response.data)
             } else {
                 console.log('Login failed')
@@ -27,7 +25,6 @@ export const createUser = (dispatch, userdata) => {
     axios.post(API + '/users', userdata)
         .then(response => {
             if (response.data.id) {
-                saveData('user', response.data)
                 setUser(dispatch, response.data)
             } else {
                 console.log('Login failed')

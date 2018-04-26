@@ -5,17 +5,17 @@ import UserList from './components/UserList';
 import TodoList from './components/TodoList';
 import User from './components/User';
 import { setUser } from './actions/userActions';
-import { getData } from './misc/storage';
+// import { getData } from './misc/storage';
 import './misc/styles.css';
 
 class App extends Component {
 
-  componentDidMount() {
-    let userData = getData('user');
-    if (userData) {
-      this.props.setUser(userData);
-    }
-  }
+  // componentDidMount() {
+  //   // let userData = getData('user');
+  //   if (userData) {
+  //     this.props.setUser(userData);
+  //   }
+  // }
 
   getUI() {
     let email = this.props.user.email
