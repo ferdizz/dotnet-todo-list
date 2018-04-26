@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
 using TodoList.Data;
 using TodoList.Models;
 
@@ -44,22 +46,37 @@ namespace TodoList.Controllers
                 return NotFound("User not found");
             }
 
-            var todos = from todo in user.Todos
-                        select new
-                        {
-                            Id = todo.Id,
-                            Title = todo.Title,
-                            Description = todo.Description,
-                            Type = ((TodoType)todo.Type).ToString(),
-                            IsDone = todo.IsDone
-                        };
+            return Ok(new
+            {
+                Id = user.Id,
+                Email = user.Email,
+                Name = user.Name,
+                Todos = getTodos(user)
+            });
+        }
+
+        // POST api/users/login
+        [HttpPost("login")]
+        public IActionResult Login([FromBody]JToken body)
+        {
+            if (body == null || body["email"] == null)
+            {
+                return BadRequest();
+            }
+
+            var user = _userManager.GetByEmail((string)body["email"]);
+
+            if (user == null)
+            {
+                return NotFound("User not found");
+            }
 
             return Ok(new
             {
                 Id = user.Id,
                 Email = user.Email,
                 Name = user.Name,
-                Todos = todos
+                Todos = getTodos(user)
             });
         }
 
@@ -70,6 +87,13 @@ namespace TodoList.Controllers
             if (user == null)
             {
                 return BadRequest();
+            }
+
+            bool isEmail = Regex.IsMatch(user.Email, @"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z", RegexOptions.IgnoreCase);
+
+            if (!isEmail)
+            {
+                return BadRequest("Invalid email");
             }
 
             if (_userManager.GetByEmail(user.Email) != null)
@@ -132,6 +156,27 @@ namespace TodoList.Controllers
 
             _userManager.Delete(user);
             return Ok("User deleted");
+        }
+
+        private IEnumerable<TodoDTO> getTodos(User user)
+        {
+            var todos = from todo in user.Todos
+                        select new TodoDTO
+                        {
+                            Id = todo.Id,
+                            Title = todo.Title,
+                            Description = todo.Description,
+                            Type = getType(todo.Type),
+                            IsDone = todo.IsDone,
+                            UserId = todo.UserId
+                        };
+
+            return todos;
+        }
+
+        public string getType(TodoType? t)
+        {
+            return t == null ? "Uncategorized" : ((TodoType)t).ToString();
         }
     }
 }

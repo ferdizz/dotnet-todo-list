@@ -30,6 +30,7 @@ namespace TodoList.Data
         public User GetByEmail(string email)
         {
             return db.Users
+                .Include(u => u.Todos)
                 .FirstOrDefault(u => u.Email.ToLower() == email.ToLower());
         }
 
