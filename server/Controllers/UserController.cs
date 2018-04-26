@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
 using TodoList.Data;
 using TodoList.Models;
+using static TodoList.Models.TodoDTO;
 
 namespace TodoList.Controllers
 {
@@ -51,7 +52,7 @@ namespace TodoList.Controllers
                 Id = user.Id,
                 Email = user.Email,
                 Name = user.Name,
-                Todos = getTodos(user)
+                Todos = GetTodoDTOs(user)
             });
         }
 
@@ -76,7 +77,7 @@ namespace TodoList.Controllers
                 Id = user.Id,
                 Email = user.Email,
                 Name = user.Name,
-                Todos = getTodos(user)
+                Todos = GetTodoDTOs(user)
             });
         }
 
@@ -158,25 +159,5 @@ namespace TodoList.Controllers
             return Ok("User deleted");
         }
 
-        private IEnumerable<TodoDTO> getTodos(User user)
-        {
-            var todos = from todo in user.Todos
-                        select new TodoDTO
-                        {
-                            Id = todo.Id,
-                            Title = todo.Title,
-                            Description = todo.Description,
-                            Type = getType(todo.Type),
-                            IsDone = todo.IsDone,
-                            UserId = todo.UserId
-                        };
-
-            return todos;
-        }
-
-        public string getType(TodoType? t)
-        {
-            return t == null ? "Uncategorized" : ((TodoType)t).ToString();
-        }
     }
 }

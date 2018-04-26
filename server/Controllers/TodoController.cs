@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TodoList.Data;
 using TodoList.Models;
+using static TodoList.Models.TodoDTO;
 
 namespace TodoList.Controllers
 {
@@ -26,15 +27,7 @@ namespace TodoList.Controllers
         public IActionResult GetAll()
         {
             return Ok(from todo in _todoManager.GetAll()
-                      select new
-                      {
-                          Id = todo.Id,
-                          Title = todo.Title,
-                          Description = todo.Description,
-                          Type = getType(todo.Type),
-                          IsDone = todo.IsDone,
-                          UserId = todo.UserId
-                      });
+                      select GetTodoDTO(todo));
         }
 
         // GET api/todos/5
@@ -47,15 +40,7 @@ namespace TodoList.Controllers
                 return NotFound("Todo not found");
             }
 
-            return Ok(new
-            {
-                Id = todo.Id,
-                Title = todo.Title,
-                Description = todo.Description,
-                Type = getType(todo.Type),
-                IsDone = todo.IsDone,
-                UserId = todo.UserId
-            });
+            return Ok(GetTodoDTO(todo));
         }
 
         // POST api/todos
@@ -68,7 +53,7 @@ namespace TodoList.Controllers
             }
 
             _todoManager.Add(todo);
-            return CreatedAtRoute("GetTodo", new { id = todo.Id }, todo);
+            return CreatedAtRoute("GetTodo", new { id = todo.Id }, GetTodoDTO(todo));
         }
 
         // PUT api/todos/5
@@ -133,9 +118,5 @@ namespace TodoList.Controllers
             return Ok("Todo deleted");
         }
 
-        public string getType(TodoType? t)
-        {
-            return t == null ? "Uncategorized" : ((TodoType)t).ToString();
-        }
     }
 }
