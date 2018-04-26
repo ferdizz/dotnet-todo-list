@@ -5,3 +5,27 @@
 .card-title {
     text-align: center;
 }
+
+.todo-card {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.todo-body {
+    padding-top: 13px !important;
+    padding-bottom: 13px !important;
+}
+
+.todo-link {
+    float: right;
+    margin-left: 0 !important;
+    margin-right: 1.25rem;
+}
+
+.todo-filter {
+    margin-top: 13px;
+}
+
+.todo-filter a {
+    margin-left: 1rem;
+}
