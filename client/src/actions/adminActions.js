@@ -39,9 +39,5 @@ export const deleteUser = (dispatch, id) => {
 }
 
 export const updateUser = (dispatch, user) => {
-
-}
-
-export const expandUser = (dispatch, id) => {
-    console.log('Expand user with id ', id);
+    // TODO 
 }

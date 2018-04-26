@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux';
 import user from './user';
-import todos from './todos';
+// import todos from './todos';
 import admin from './admin';
 
 const combinedReducer = combineReducers({
     user,
-    todos,
+    // todos,
     admin,
 })
 

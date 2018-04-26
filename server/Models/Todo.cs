@@ -19,6 +19,8 @@ namespace TodoList.Models
         public TodoType? Type { get; set; }
         public string Description { get; set; }
         public bool IsDone { get; set; }
+
+        [Required]
         public int UserId { get; set; }
     }
 }

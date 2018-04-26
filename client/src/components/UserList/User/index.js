@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Todo from '../../TodoList/Todo';
-import { deleteUser, updateUser, expandUser } from '../../../actions/adminActions';
+import { deleteUser, updateUser } from '../../../actions/adminActions';
 
 class User extends Component {
 
@@ -51,7 +51,6 @@ class User extends Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        // expandUser: (id) => expandUser(dispatch, id),
         updateUser: (user) => updateUser(dispatch, user),
         deleteUser: (id) => deleteUser(dispatch, id),
     }
