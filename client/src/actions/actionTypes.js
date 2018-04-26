@@ -1,6 +1,7 @@
 // User actions
 export const LOG_IN = 'LOG_IN';
 export const LOG_OUT = 'LOG_OUT';
+export const SET_STATUS = 'SET_STATUS';
 
 // Admin actions
 export const GET_USERS = 'GET_USERS';

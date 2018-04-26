@@ -38,12 +38,12 @@ class Login extends Component {
         })
     }
 
-    // submitCreate = () => {
-    //     this.props.createUser({
-    //         "email": this.state.email,
-    //         "name": this.state.name,
-    //     })
-    // }
+    submitCreate = () => {
+        this.props.createUser({
+            "email": this.state.email,
+            "name": this.state.name,
+        })
+    }
 
     changeForm = () => {
         this.setState({ showLogin: !this.state.showLogin });
@@ -75,6 +75,7 @@ class Login extends Component {
                 </div>
                 <button className="btn btn-primary" style={{ marginRight: '10px' }} onClick={this.submitCreate} >Submit</button>
                 <button className="btn btn-primary" onClick={this.changeForm} >Cancel</button>
+                <p className="text-danger" style={{ marginBottom: '0', marginTop: '10px' }} >{this.props.status}</p>
             </div>
         )
 
@@ -97,7 +98,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         login: (userdata) => login(dispatch, userdata),
-        // createUser: (userdata) => createUser(dispatch, userdata)
+        createUser: (userdata) => createUser(dispatch, userdata)
     }
 }
 
