@@ -11,9 +11,16 @@ const user = (state = initialState, action) => {
         case types.SET_STATUS:
             return Object.assign({}, state, action.status);
         case types.ADD_TODO:
-            return {
-                ...state,
-                todos: [...state.todos, action.todo]
+            if (state.todos) {
+                return {
+                    ...state,
+                    todos: [...state.todos, action.todo]
+                }
+            } else {
+                return {
+                    ...state,
+                    todos: [action.todo]
+                }
             }
         case types.TOGGLE_TODO:
             return {
